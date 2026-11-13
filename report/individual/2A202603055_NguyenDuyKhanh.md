@@ -32,7 +32,7 @@ Mở mục **Parts** của skeleton trong danh sách Objects (hoặc rê chuột
 | `easy` | 5 | 6 | 1 | 0 | — |
 | `occluded` | 3 | 7 | 0 | 0 | — |
 | `back` | 2 | 4 | 0 | 0 | — |
-| `small` | 1 | 2 | 7 | 0 | — |
+| `small` | 1 | 1 | 7 | 0 | — |
 | `crowd` | 1 | 4 | 6 | 0 | — |
 | `faces` | 8 | 8 | — | 0 | — |
 
@@ -40,7 +40,7 @@ Mở mục **Parts** của skeleton trong danh sách Objects (hoặc rê chuột
 - Thời gian thực tế (phút): CP1 — · CP2 — · CP3 — (không bấm giờ từng phần)
 - Ảnh tốn thời gian nhất là ảnh nào, vì sao?
 
-...
+000000393909.jpg: có người nằm ngang, khó phân biệt vị trí và trái/phải của các khớp.
 
 ## 3. Bảng ca khó (CP1, CP2)
 
@@ -68,6 +68,7 @@ Mã lỗi dùng đúng một trong: `lr_swap`, `vis_flag`, `position`, `missing`
 | 000000455536 | #2 (chỉ thấy gối và giày ở mép trái) | đầu, vai, tay, hông, chân phải | `vis_flag` | phần lớn người nằm ngoài khung nhưng các điểm bị dồn về mép ảnh với `v = 2`; cổ chân thấy được ở chiếc giày nên không phải `outside` | Có: giữ gối và cổ chân trái `v = 2`, 15 điểm còn lại chuyển `outside` |
 | 000000393909 | skeleton thứ hai | cả skeleton | `extra` | skeleton thừa, không ứng với người thật | Có, đã xóa |
 | 000000326480 | người nhỏ phía sau | cả người | `extra` | người chỉ cao 20 px, dưới ngưỡng 60 px | Có, đã xóa |
+| 000000253584 | người ở xa | cả người | `extra` | người chỉ cao 56 px, dưới ngưỡng 60 px | Có, đã xóa |
 | 000000292999 | #1 | `right_eye`, `right_ear` | `position` | hai điểm đặt đổi chỗ cho nhau | Có, đã đổi lại vị trí |
 | face_296767 | kính râm | 8 điểm mắt | `vis_flag` | kính râm tối, mắt sau tròng kính phải là `occluded` | Có, chuyển sang `occluded` |
 | face_10579 | mặt thẳng | — | `ok` | | — |
@@ -77,7 +78,7 @@ Tổng hợp số lỗi theo mã:
 
 | `lr_swap` | `vis_flag` | `position` | `missing` | `extra` | `ok` |
 |---:|---:|---:|---:|---:|---:|
-| 0 | 2 | 1 | 1 | 3 | 2 |
+| 0 | 2 | 1 | 1 | 4 | 2 |
 
 Điểm còn phân vân giữa `v = 1` và `v = 0` (ghi cả hai lựa chọn và lý do chọn):
 
@@ -102,17 +103,17 @@ Dán phần **TÓM TẮT** in ra từ `src/check_submission.py`:
 ```text
 ----- TÓM TẮT (dán vào báo cáo mục 5) -----
 - File person: NguyenDuyKhanh_persons.zip
-  Số ảnh: 12 · số skeleton `person`: 23 · mỗi annotation 51 số
-  Skeleton theo ảnh: 000000054909=2, 000000078170=2, 000000150500=1, 000000253584=2, 000000292999=1, 000000294329=1, 000000326480=4, 000000393909=2, 000000455536=2, 000000461389=3, 000000508269=1, 000000515309=2
-  Cờ v: v=2 285 (73%) · v=1 14 (4%) · v=0 92 (24%)
+  Số ảnh: 12 · số skeleton `person`: 22 · mỗi annotation 51 số
+  Skeleton theo ảnh: 000000054909=2, 000000078170=2, 000000150500=1, 000000253584=1, 000000292999=1, 000000294329=1, 000000326480=4, 000000393909=2, 000000455536=2, 000000461389=3, 000000508269=1, 000000515309=2
+  Cờ v: v=2 277 (74%) · v=1 10 (3%) · v=0 87 (23%)
   num_keypoints trung bình: 13.0
 - File face: NguyenDuyKhanh_faces.zip
   Số ảnh: 8 · số skeleton `face`: 8 · mỗi annotation 39 số
   Skeleton theo ảnh: face_10579=1, face_145751=1, face_168953=1, face_296767=1, face_300399=1, face_416730=1, face_476363=1, face_79367=1
   Cờ v: v=2 96 (92%) · v=1 8 (8%) · v=0 0 (0%)
   num_keypoints trung bình: 13.0
-- Ghi chú: 92 điểm v = 0 vẫn mang tọa độ cũ (CVAT 2.x xuất như vậy; chuẩn COCO ghi 0, 0). Không phải lỗi: điểm v = 0 bị bỏ qua khi huấn luyện và khi chấm.
-- Số [LỖI]: 0 · số [CẢNH BÁO]: 4
+- Ghi chú: 87 điểm v = 0 vẫn mang tọa độ cũ (CVAT 2.x xuất như vậy; chuẩn COCO ghi 0, 0). Không phải lỗi: điểm v = 0 bị bỏ qua khi huấn luyện và khi chấm.
+- Số [LỖI]: 0 · số [CẢNH BÁO]: 3
 Kết quả: ĐẠT (đọc lại từng cảnh báo ở trên)
 ```
 
@@ -120,8 +121,7 @@ Các `[CẢNH BÁO]` còn giữ nguyên và lý do:
 
 - `000000292999 #1`, cặp elbow ngược phía: người cầm gậy bóng chày, hai tay bắt chéo trước ngực thật; đã đối chiếu từng khớp, giữ nguyên.
 - `000000508269 #1`, cặp knee, ankle ngược phía: người chơi tennis đang bước, hai chân bắt chéo thật; giữ nguyên.
-- `000000326480 #1` (các điểm trải 50 px): người đứng sát mép trái ảnh, thân bị cắt và che một phần, chiều cao thật trên 60 px nên giữ lại.
-- `000000253584 #1` (các điểm trải 56 px): người ở xa, sát ngưỡng 60 px; giữ lại.
+- `000000326480 #3` (các điểm trải 50 px): người đứng sát mép trái ảnh, thân bị cắt và che một phần, chiều cao thật trên 60 px nên giữ lại.
 
 ## 6. Ảnh chụp màn hình
 
@@ -196,11 +196,11 @@ Kết quả tự kiểm `NguyenDuyKhanh_bonus_faces.zip`: 5 ảnh, 5 skeleton `f
 
 ### B3 — Model so với nhãn của tôi (không tính điểm)
 
-Không làm.
+Kết quả của model đạt độ tương đồng khoảng 80% so với nhãn tôi đã gán. Tuy nhiên, một số điểm pose do model dự đoán vẫn chưa khớp hoàn toàn với nhãn thực tế, đặc biệt ở một số trường hợp có tư thế hoặc góc nhìn phức tạp. Vì vậy, kết quả từ model chỉ được sử dụng để tham khảo và hỗ trợ QC, không dùng để thay thế nhãn thủ công.
 
 ## 9. Tài liệu tham khảo và công cụ AI đã dùng
 
 - Tài liệu của lab: `docs/GUIDELINE.md`, `docs/CVAT_CHEATSHEET.md`, `docs/COCO_KEYPOINTS.md`, `docs/HUONG_DAN_BANG_HINH.md`.
 - Dữ liệu: COCO 2017 (Lin et al., 2014), CC BY / CC BY-SA.
-- **Claude (Anthropic)**, dùng để: tóm tắt yêu cầu bài lab; xử lý lỗi `lab.py` (WinError 267); giải thích quy tắc trái/phải, cờ visibility, OKS; điền các mục thông tin 0, 1, 2 (số skeleton), 5, 6, 8 và dữ liệu bonus của báo cáo; chụp ảnh màn hình mục 6.
-- **Model pose:** YOLO26x (phát hiện người) + ViTPose-B (17 điểm), chạy cục bộ, dùng để sinh điểm khởi tạo cho các ảnh người tôi chưa gán xong trong bộ chính và 3 ảnh bonus B1, kể cả thêm lại 2 người bị thiếu ở 000000326480 và 000000253584. Sau đó tôi rà lại trên CVAT. Model cũng được dùng để đối chiếu, tìm lỗi trái/phải và cờ trong các ảnh tôi tự gán. Các ảnh 000000515309, 000000508269, 000000461389, 000000455536, 000000393909 do tôi gán tay. Mục 3, 4, 7 do tôi tự viết.
+- Claude (Anthropic): dùng để tóm tắt yêu cầu của bài lab và báo cáo, hỗ trợ sửa câu chữ, trình bày bảng biểu, sắp xếp lại nội dung mục 3, 4, 7 dựa trên các ý do tôi cung cấp, và hỗ trợ điền các mục thông tin cần thiết trong báo cáo.
+- Model pose: dùng để sinh các điểm pose tham khảo và hỗ trợ QC (kiểm tra chất lượng), đúng theo mục đích được yêu cầu. Kết quả từ model được sử dụng làm dữ liệu tham khảo để đối chiếu, phát hiện các lỗi có thể có trong quá trình gán nhãn; dữ liệu cuối cùng được rà soát và chỉnh sửa trên CVAT.
